@@ -1,0 +1,29 @@
+safayavatsalapiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend-pod
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: frontend
+  template:
+    metadata:
+      labels:
+        app: frontend
+    spec:
+      containers:
+        - name: frontend
+          image: "safayavatsal/simple_mearn_micro_fe:latest"
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 3000
+              protocol: TCP
+          env:
+            - name: PORT
+              value: "3000"
+            - name: REACT_APP_SERVICE1_URL
+              value: "http://4.188.111.163/"
+            - name: REACT_APP_SERVICE2_URL
+              value: "http://4.188.106.133/"
+          

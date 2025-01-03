@@ -1,0 +1,30 @@
+safayavatsalapiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: profile-service-pod
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: profile-service
+  template:
+    metadata:
+      labels:
+        app: profile-service
+    spec:
+      containers:
+        - name: profile-service
+          image: "safayavatsal/simple_mearn_be_micro_2:latest"
+          imagePullPolicy: Always
+          resources:
+            limits:
+              memory: "128Mi"
+              cpu: "500m"
+          ports:
+            - containerPort: 3002
+              protocol: TCP
+          env:
+            - name: PORT
+              value: "3002"
+            - name: MONGO_URL
+              value: "mongodb+srv://safayavatsal:abcd4321A@cluster0.tyk2d2k.mongodb.net/SimpleMicroService"

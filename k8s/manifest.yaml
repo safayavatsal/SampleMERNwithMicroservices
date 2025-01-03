@@ -1,0 +1,140 @@
+# hello-service Deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hello-service-pod
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: hello-service
+  template:
+    metadata:
+      labels:
+        app: hello-service
+    spec:
+      containers:
+        - name: hello-service
+          image: "safayavatsal/simple_mearn_be_micro_1:latest"
+          imagePullPolicy: Always
+          resources:
+            limits:
+              memory: "128Mi"
+              cpu: "500m"
+          ports:
+            - containerPort: 3001
+              protocol: TCP
+          env:
+            - name: PORT
+              value: "3001"
+
+---
+
+# hello-service Service
+apiVersion: v1
+kind: Service
+metadata:
+  name: hello-service-svc
+spec:
+  type: ClusterIP
+  selector:
+    app: hello-service
+  ports:
+    - port: 80
+      targetPort: 3001
+
+---
+
+# profile-service Deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: profile-service-pod
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: profile-service
+  template:
+    metadata:
+      labels:
+        app: profile-service
+    spec:
+      containers:
+        - name: profile-service
+          image: "safayavatsal/simple_mearn_be_micro_2:latest"
+          imagePullPolicy: Always
+          resources:
+            limits:
+              memory: "128Mi"
+              cpu: "500m"
+          ports:
+            - containerPort: 3002
+              protocol: TCP
+          env:
+            - name: PORT
+              value: "3002"
+            - name: MONGO_URL
+              value: "mongodb+srv://safayavatsal:abcd4321A@cluster0.tyk2d2k.mongodb.net/SimpleMicroService"
+
+---
+
+# profile-service Service
+apiVersion: v1
+kind: Service
+metadata:
+  name: profile-service-svc
+spec:
+  type: ClusterIP
+  selector:
+    app: profile-service
+  ports:
+    - port: 80
+      targetPort: 3002
+
+---
+
+# frontend Deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend-pod
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: frontend
+  template:
+    metadata:
+      labels:
+        app: frontend
+    spec:
+      containers:
+        - name: frontend
+          image: "safayavatsal/simple_mern_micro_fe:latest"
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 3000
+              protocol: TCP
+          env:
+            - name: PORT
+              value: "3000"
+            - name: REACT_APP_SERVICE1_URL
+              value: "http://hello.cloudcrypto.in/"
+            - name: REACT_APP_SERVICE2_URL
+              value: "http://profile.cloudcrypto.in/"
+
+---
+
+# frontend Service
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend-svc
+spec:
+  type: ClusterIP
+  selector:
+    app: frontend
+  ports:
+    - port: 80
+      targetPort: 3000
