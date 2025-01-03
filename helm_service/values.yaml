@@ -1,0 +1,32 @@
+deployments:
+  backendhello:
+    name: backend-hello
+    image: flowerking21/micro_backend_helloservice
+    tag: latest
+    port: 4200
+  
+  backendprofile:
+    name: backend-profile
+    image: flowerking21/micro_backend_profileservice
+    tag: latest
+    port: 4201
+  
+  frontend:
+    name: frontend
+    image: flowerking21/micro_frontendservice
+    tag: latest
+    port: 3000
+
+Services:
+  backend: 
+    name: backend-helloservice
+    port: 4200
+    targetport: 4200
+  backendprofile:
+    name: backend-profileservice
+    port: 4201
+    targetport: 4201
+  frontend: 
+    name: frontend-service
+    port: 3000
+    targetport: 3000

@@ -1,0 +1,40 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.Services.backend.name }}
+spec:
+  selector:
+    app: {{ .Values.deployments.backend.name }}
+  ports:
+  - port: {{ .Values.Services.backend.port }}
+    targetPort: {{ .Values.Services.backend.targetPort }}
+  type: NodePort
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.Services.backendprofile:name }}
+spec:
+  selector:
+    app: {{ .Values.deployments.backendprofile.name}}
+  ports:
+  - port: {{ .Values.Services.backendprofile.port }}
+    targetPort: {{ .Values.Services.backendprofile.targetPort }}
+  type: NodePort
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.Services.frontend.name }}
+spec:
+  selector:
+    app: {{ .Values.deployments.frontend.name }}
+  ports:
+  - port: {{ .Values.Services.frontend.port }}
+    targetPort: {{ .Values.Services.frontend.targetPort }}
+  type: LoadBalancer
+
+

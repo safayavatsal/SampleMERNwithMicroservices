@@ -1,0 +1,40 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: backend-helloservice
+spec:
+  selector:
+    app: backend-hello
+  ports:
+  - port: 4200
+    targetPort: 4200
+  type: NodePort
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: backend-profileservice
+spec:
+  selector:
+    app: backend-profile
+  ports:
+  - port: 4201
+    targetPort: 4201
+  type: NodePort
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend-service
+spec:
+  selector:
+    app: frontend
+  ports:
+  - port: 3000
+    targetPort: 3000
+  type: LoadBalancer
+
+

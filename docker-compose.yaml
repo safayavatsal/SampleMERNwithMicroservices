@@ -1,0 +1,19 @@
+version: "3.8"
+services:
+  frontend:
+    build: ./frontend
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend_profileservice
+  backend_profileservice:
+    build: ./backend/profileService
+    ports:
+      - "4201:4201"
+    depends_on:
+      - backend_helloservice
+  backend_helloservice:
+    build: ./backend/helloService
+    ports:
+      - "4200:4200"
+    

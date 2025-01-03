@@ -1,0 +1,66 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.deployments.backendhello.name }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ .Values.deployments.backendhello.name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.deployments.backendhello.name }}
+    spec:
+      containers:
+      - name: {{ .Values.deployments.backendhello.name }}
+        image: "{{ .Values.deployments.backendhello.image }}:{{ .Values.deployments.backendhello.tag }}"
+        ports:
+        - containerPort: {{ .Values.deployments.backendhello.port }}
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.deployments.backendprofile.name }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ .Values.deployments.backendprofile.name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.deployments.backendprofile.name }}
+    spec:
+      containers:
+      - name: {{ .Values.deployments.backendprofile.name }}
+        image: "{{ .Values.deployments.backendprofile.image }}:{{ .Values.deployments.backendprofile.tag }}"
+        ports:
+        - containerPort: {{ .Values.deployments.backendprofile.port }}
+      
+--- 
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.deployments.frontend.name }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ .Values.deployments.frontend.name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.deployments.frontend.name }}
+    spec:
+      containers:
+      - name: {{ .Values.deployments.frontend.name }}
+        image: "{{ .Values.deployments.frontend.image}} {{ .Values.deployments.frontend.tag }}"
+        ports:
+        - containerPort: {{ .Values.deployments.frontend.port }}
+
+
+
