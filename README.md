@@ -287,7 +287,7 @@ gcloud container clusters delete mern-micro-cluster --zone us-central1-a --quiet
 
 ---
 
-### Step 5: Verify AKS Cluster Deletion
+### Step 5: Verify GKS Cluster Deletion
 
 ```bash
 gcloud container clusters list
